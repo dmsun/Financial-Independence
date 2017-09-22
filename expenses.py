@@ -21,6 +21,8 @@ import quarterly_analysis as qtr
 import yearly_analysis as ytd
 import net_worth as networth
 
+import financial_independence
+import utils as utils
 #	some initial setup - abbreviating the Decimal command, changing the style of matplotlib, assigning the current working directory variable and filepath variable
 D = decimal.Decimal
 matplotlib.style.use('ggplot')
@@ -58,22 +60,20 @@ df_work = df[['ID', 'Date','Cost', 'Category']].dropna()
 df_work.loc[:,'Month'] = df_work.loc[:, 'Date'].dt.month
 df_work.loc[:,'Quarter'] = df_work.loc[:, 'Date'].dt.quarter
 df_work.loc[:,'Year'] = df_work.loc[:, 'Date'].dt.year
+
 #   the below code remaps the Quarters of the year, to Quarters of Australia's financial year
-for row in range(len(df_work['Date'])):
-    if df_work.loc[row,'Quarter'] == 2:
-        df_work.loc[row,'Quarter'] = 4
-    else:
-        df_work.loc[row,'Quarter'] = (df_work.loc[row,'Quarter'] + 2) % 4
-    if df_work.loc[row, 'Month'] < 7:
-        df_work.loc[row ,'FY'] = 'JUL' + str((df_work.loc[row, 'Date'].to_pydatetime()).year - 1) + '-' + 'JUN' + str((df_work.loc[row, 'Date'].to_pydatetime()).year)
-    else:
-        df_work.loc[row ,'FY'] = 'JUL' + str((df_work.loc[row, 'Date'].to_pydatetime()).year) + '-' + 'JUN' + str((df_work.loc[row, 'Date'].to_pydatetime()).year + 1)
+df_work.loc[:,'Aus_Qtr'] = df_work.loc[:, 'Quarter'].map(utils.quarter_aus)
+df_work.loc[:,'Fin_Year'] = df_work.loc[:,'Date'].apply(utils.fin_year)
 
 #	begin the monthly reporting
-mon.mon(df_work, cwd, tableau20)
+utils.mon_func(df_work, cwd, tableau20)
+utils.qtr_func(df_work, cwd, tableau20)
+utils.year_func(df_work, cwd)
+financial_independence.financial_independence()
+
 #	begin the Quarterly reporting
-qtr.qtr(df_work, cwd, tableau20)
+#qtr.qtr(df_work, cwd, tableau20)
 #	begin the YTD reporting
-ytd.ytd(df_work, cwd, tableau20)
+#ytd.ytd(df_work, cwd, tableau20)
 #   begin the Networth reporting
-networth.networth(cwd, tableau20)
+#networth.networth(cwd, tableau20)

@@ -44,7 +44,7 @@ def ytd (df_work, cwd, tableau20):
 
     # some local variables
     today = dt.date.today()
-    unique_years = list(df_work.FY.unique())
+    unique_years = list(df_work.Fin_year.unique())
 
     for fin_year in unique_years:
         year = fin_year[:7]
@@ -56,7 +56,7 @@ def ytd (df_work, cwd, tableau20):
         else:
             date_diff = dt.date(year + 1, 7, 1) - begin
         #print(fin_year)
-        df_year = df_work.loc[df_work.FY == fin_year, :]
+        df_year = df_work.loc[df_work.Fin_year == fin_year, :]
         df_ytd_work = df_year.loc[:,('Date','Cost')].groupby('Date', as_index = False).sum().sort_values('Date', ascending = True)
         df_ytd_work.loc[:, 'Running Total'] = df_ytd_work.loc[:, 'Cost'].cumsum()
         df_cat = df_year.loc[:,('Category', 'Cost')].groupby('Category', as_index = False).sum().sort_values('Cost', ascending = False)
@@ -70,7 +70,7 @@ def ytd (df_work, cwd, tableau20):
         max_cat = df_cat.loc[:, 'Cost'].max()
         last_day = df_ytd_work.Date.iloc[-1]
         #print checks
-        print("The total spend in FY {0} is ${1}".format(fin_year, ytd_spend))
+        print("The total spend in Fin_year {0} is ${1}".format(fin_year, ytd_spend))
         #print("The average daily spend is $", average_spend)
 
         with PdfPages("{0}\\reports\\{1} YTD Expense Report.pdf".format(cwd, fin_year)) as pdf:
