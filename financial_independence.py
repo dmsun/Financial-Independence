@@ -67,5 +67,3 @@ def financial_independence(age = dt.date.today().year - 1990,
 
     index_fi = np.nonzero(incomeVec >= expenses)[0][0]
     utils.plot_fi(ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, expensesVec, index_fi)
-    #   begin the financial independence calculation
-#financial_independence()

@@ -151,6 +151,7 @@ def plot_fi(ageVec, networthVec,superVec, savingsVec, principalVec, incomeVec, e
             # plots vertical line at the age of finanical independence which is parsed into the function. This is dependent of calculations prior to calling the function
             plt.axvline(x=ageVec[index_fi], label = "Financial Independence")
             plt.legend(loc=4)
+            plt.close()
 
 
 def quarter_aus(quarter):
