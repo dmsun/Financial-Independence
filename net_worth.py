@@ -1,24 +1,19 @@
 #! usr/bin/env python3
 
-#	import modules from main
+# import modules from main
 import os
-import math
-import decimal
-import datetime as dt
-import calendar
-
-#	import other modules
+import matplotlib.pyplot as plt
+# import other modules
 import numpy as np
 import pandas as pd
-import matplotlib
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
-#	some initial setup - abbreviating the Decimal command, changing the style of matplotlib, assigning the current working directory variable and filepath variable
-
-def networth(cwd, tableau20):
+def net_worth(cwd, tableau20):
     #TODO add linux if and add features to Utils, break up and pythonise.
-    filepath = "{}\\data\\Life - Networth.csv".format(cwd)
+    if os.name == 'nt':
+        filepath = "{}\\data\\Networth - Net Worth.csv".format(cwd)
+    else:
+        filepath = "{}/data/Networth - Net Worth.csv".format(cwd)
     columns = ['Month',
                'Net Worth',
                'Growth',
@@ -58,10 +53,8 @@ def networth(cwd, tableau20):
         df_networth.plot(kind = 'line', subplots = True, ax = ax, x = 'Month', y = 'Net Worth', color = tableau20[1])
         df_networth.plot(kind = 'line', subplots = True, ax = ax, x = 'Month', y = 'Assets Subtotal', color = tableau20[3])
         df_networth.plot(kind = 'line', subplots = True, ax = ax, x = 'Month', y = 'Liabilities Total', color = tableau20[4])
-        #max_cat = max(list(df_qtr_cat_pivot.max()))
         ax.set_xlabel("Month")
         ax.set_ylabel("Value")
-        #ax.set_ylim([0, max_cat])
         ax.set_title("Net Worth over time")
         labels = ax.get_xticklabels()
         plt.setp(labels, rotation=90, fontsize=6)
@@ -69,7 +62,6 @@ def networth(cwd, tableau20):
         x = list(df_networth['Month'].get_values())
         y = list(np.zeros(len(df_networth['Net Worth'])))
         ax = plt.plot(x, y, color = 'black')
-        #plt.legend(labels= ['Q{}'.format(qtr) for qtr in list(df_qtr_cat_pivot)])
         plt.tight_layout()
         pdf.savefig(fig)
         plt.close()
@@ -77,15 +69,12 @@ def networth(cwd, tableau20):
         fig, ax = plt.subplots()
         df_networth.plot(kind = 'line', subplots = True, ax = ax, x = 'Month', y = 'Acorns', color = tableau20[0])
         df_networth.plot(kind = 'line', subplots = True, ax = ax, x = 'Month', y = 'Stocks', color = tableau20[1])
-        #max_cat = max(list(df_qtr_cat_pivot.max()))
         ax.set_xlabel("Month")
         ax.set_ylabel("Value")
-        #ax.set_ylim([0, max_cat])
         ax.set_title("Net Worth over time")
         labels = ax.get_xticklabels()
         plt.setp(labels, rotation=90, fontsize=6)
         ax.xaxis.set_label_position('bottom')
-        #plt.legend(labels= ['Q{}'.format(qtr) for qtr in list(df_qtr_cat_pivot)])
         plt.tight_layout()
         pdf.savefig(fig)
         plt.close()
