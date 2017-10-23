@@ -1,5 +1,5 @@
 #! usr/bin/env python3
-
+#TODO simplify and partition to shorten this
 from decimal import Decimal as D
 import calendar
 import datetime as dt

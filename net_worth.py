@@ -17,6 +17,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 #	some initial setup - abbreviating the Decimal command, changing the style of matplotlib, assigning the current working directory variable and filepath variable
 
 def networth(cwd, tableau20):
+    #TODO add linux if and add features to Utils, break up and pythonise.
     filepath = "{}\\data\\Life - Networth.csv".format(cwd)
     columns = ['Month',
                'Net Worth',
