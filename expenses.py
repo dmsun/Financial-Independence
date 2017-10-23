@@ -27,8 +27,12 @@ import utils as utils
 D = decimal.Decimal
 matplotlib.style.use('ggplot')
 cwd = os.getcwd()
-cwd = "C:\\users\\ssamdj\\Google Drive\\python\\Expenses"
-filepath = "{}\\data\\Expenses.csv".format(cwd)
+if os.name == 'nt':
+    cwd = "C:\\Users\ssamdj\Dropbox\Financials"
+    filepath = "{}\\data\\Expenses.csv".format(cwd)
+else:
+    cwd = "~/Dropbox/Financials"
+    filepath = "{}/data/Expenses.csv".format(cwd)
 
 
 #	These are the "Tableau 20" colors as RGB.
@@ -48,11 +52,13 @@ for i in range(len(tableau20)):
 df = pd.read_csv(filepath, parse_dates = [1,2], infer_datetime_format = True, dayfirst= True)
 df['Cost'] = (df['Cost'].str.replace(r'[^-+\d.]', '').astype(float))
 
-#	print the metadata definitions
-with open("{}\\docs\\Metadata Definitions.txt".format(cwd), "w+") as file:
-	file.write("The following is a list of the data types read in from the Expenses file. \n")
-	file.write(pd.Series.to_string(df.dtypes))
-	file.write("\n")
+if os.name == 'nt':
+    #	print the metadata definitions
+    with open("{}\\docs\\Metadata Definitions.txt".format(cwd), "w+") as file:
+        file.write("The following is a list of the data types read in from the Expenses file. \n")
+        file.write(pd.Series.to_string(df.dtypes))
+        file.write("\n")
+
 
 #	create a working dataframe df_work, add quarter column
 df_work = df[['ID', 'Date','Cost', 'Category']].dropna()
@@ -69,11 +75,11 @@ df_work.loc[:,'Fin_Year'] = df_work.loc[:,'Date'].apply(utils.fin_year)
 utils.mon_func(df_work, cwd, tableau20)
 utils.qtr_func(df_work, cwd, tableau20)
 utils.year_func(df_work, cwd)
-financial_independence.financial_independence()
+#financial_independence.financial_independence()
 
 #	begin the Quarterly reporting
 #qtr.qtr(df_work, cwd, tableau20)
 #	begin the YTD reporting
 #ytd.ytd(df_work, cwd, tableau20)
 #   begin the Networth reporting
-#networth.networth(cwd, tableau20)
+networth.networth(cwd, tableau20)
