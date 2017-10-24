@@ -208,7 +208,11 @@ def mon_func(df_work, cwd, colours = tableau20):
     df_day.loc[:,'Running Total'] =  df_day.groupby(by = ['Year', 'Month'])['Cost'].cumsum()
 
     for name, group in df_day.groupby(by = ['Year', 'Month']):
-        with PdfPages("{0}\\reports\\{3}.{1} Expense Report - {2}.pdf".format(cwd, name[1], calendar.month_name[name[1]], name[0])) as pdf:
+        if os.name == 'nt':
+            report_dir = "{0}\\reports\\{3}.{1} Expense Report - {2}.pdf".format(cwd, name[1],calendar.month_name[name[1]], name[0])
+        else:
+            report_dir = "{0}/reports/{3}.{1} Expense Report - {2}.pdf".format(cwd, name[1],calendar.month_name[name[1]], name[0])
+        with PdfPages(report_dir) as pdf:
             # write to the pdf on a new page and close the plot. closing maybe redundant - need to perform some testing.
             pdf.savefig(month_day_report(name, group, tableau20))
             plt.close()

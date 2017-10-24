@@ -45,12 +45,14 @@ def financial_independence(age = dt.date.today().year - 1990,
     savings = net_income - expenses
     savings_ratio = D(round((net_income - expenses)/net_income,2))
 
+
     # define the total length of the arrays
     L = 70
     indexVec = np.linspace(0, L - age, num = L - age + 1)
     ageVec = np.linspace(age, L, num = L - age + 1)
     expensesVec = np.linspace(float(expenses), float(expenses), num =  L - age + 1)
     incomeVec = np.zeros(L - age + 1)
+
     # define index at retirement age
     index_retire = retirement_age - age
     end = L - age + 1
