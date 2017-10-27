@@ -66,7 +66,7 @@ def financial_independence(age=dt.date.today().year - 1990,
 
     # super is added to the income stream after retirement age
     # TODO: Complete a better implementation of post - retirement usage.
-    incmeVec[0:index_retire] = float(withdraw_rate) * savingsVec[0:index_retire]
+    incomeVec[0:index_retire] = float(withdraw_rate) * savingsVec[0:index_retire]
     incomeVec[index_retire:end] = float(withdraw_rate) * networthVec[index_retire:end]
 
     index_fi = np.nonzero(incomeVec >= expenses)[0][0]
