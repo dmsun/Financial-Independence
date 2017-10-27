@@ -216,9 +216,9 @@ def mon_func(df_work, cwd, colours = tableau20):
             # write to the pdf on a new page and close the plot. closing maybe redundant - need to perform some testing.
             pdf.savefig(month_day_report(name, group, tableau20))
             plt.close()
-            pdf.savefig(cat_report(df_mon.loc[(df_mon.Month == name[1]), ('Category', 'Cost')], name))
+            pdf.savefig(cat_report(df_mon.loc[(df_mon.Year == name[0]) & (df_mon.Month == name[1]), ('Category', 'Cost')], name))
             plt.close()
-            pdf.savefig(report_table(df_mon.loc[(df_mon.Month == name[1]), ('Category', 'Cost')], name))
+            pdf.savefig(report_table(df_mon.loc[(df_mon.Year == name[0]) & (df_mon.Month == name[1]), ('Category', 'Cost')], name))
             plt.close()
 
 def qtr_func(df_work, cwd, colours = tableau20):
