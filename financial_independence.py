@@ -38,9 +38,9 @@ def financial_independence(age=dt.date.today().year - 1990,
 
     withdraw_rate = utils.withdraw_rate(growth_rate, inflation_rate, safety_factor)
     principal_required = utils.principal(expenses, withdraw_rate)
-    annual_super = utils.super(gross_income, super_rate, co_contrib)
-    taxable_income = utils.taxable_income(gross_income, super_rate, co_contrib)
-    tax = utils.tax(taxable_income)
+    annual_super = utils.annual_super_contribution(gross_income, super_rate, co_contrib)
+    taxable_income = utils.calc_taxable_income(gross_income, super_rate, co_contrib)
+    tax = utils.calc_tax(taxable_income)
     net_income = taxable_income - tax
     savings = net_income - expenses
     savings_ratio = D(round((net_income - expenses) / net_income, 2))
