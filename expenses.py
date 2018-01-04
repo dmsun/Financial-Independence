@@ -65,5 +65,6 @@ utils.qtr_func(df_work, cwd, tableau20)
 utils.year_func(df_work, cwd)
 financial_independence.financial_independence()
 
+
 #   begin the Net Worth reporting
 net_worth.net_worth(cwd, tableau20)
