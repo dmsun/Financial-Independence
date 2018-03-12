@@ -14,7 +14,8 @@ def net_worth(cwd, tableau20):
         filepath = "{}\\data\\Networth.csv".format(cwd)
     else:
         filepath = "{}/data/Networth.csv".format(cwd)
-    columns = ['Month',
+    columns = ['Number',
+               'Month',
                'Net Worth',
                'Growth',
                'Delta',
@@ -32,14 +33,36 @@ def net_worth(cwd, tableau20):
                'Personal Debt',
                'Credit Debt',
                'Liabilities Total']
+    dtypes = {'Number': np.int32,
+              'Month': object,
+              'Net Worth': object,
+              'Growth': object,
+              'Delta': object,
+              'Car': object,
+              'ING Savings': object,
+              'UBank Savings': object,
+              'Savings': object,
+              'Superannuation': object,
+              'Acorns': object,
+              'Stocks': object,
+              'Cryptocurrency': object,
+              'Assets Subtotal': object,
+              'HELP Debt': object,
+              'Car Debt': object,
+              'Personal Debt': object,
+              'Credit Debt': object,
+              'Liabilities Total': object}
     df_networth = pd.read_csv(filepath,
-                              header = 0,
-                              #names = columns,
-                              parse_dates = [0],
-                              infer_datetime_format = True,
-                              dayfirst = True)
-    df_networth.drop(['ING Savings', 'UBank Savings'], axis = 1)
+                              header=0,
+                              #names=columns,
+                              parse_dates=[1],
+                              infer_datetime_format=True,
+                              dayfirst=True,
+                              dtype=dtypes)
+    df_networth.drop(['ING Savings', 'UBank Savings'], axis=1)
     df_networth = df_networth.dropna()
+    df_networth = df_networth.sort_values(by=['Number'])
+    df_networth = df_networth[df_networth.Number >= 4]
     for (col, colname) in enumerate(columns):
         col_len = len(df_networth[colname])
         try:

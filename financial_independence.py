@@ -16,7 +16,7 @@ import utils
 def financial_independence(age=dt.date.today().year - 1990,
                            gross_income=D(84000),
                            curr_investments=D(20000),
-                           super_bal=D(23000),
+                           super_bal=D(27000),
                            expenses=D(44000),  # actual spend in FY 2016-2017 was $44 856.51
                            super_rate=D(11.5),
                            co_contrib=D(3),
