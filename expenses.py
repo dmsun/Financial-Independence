@@ -10,7 +10,7 @@ import matplotlib
 
 # import local functions
 import net_worth as net_worth
-import financial_independence
+from financial_independence import fin_ind
 import utils as utils
 
 # some initial setup - abbreviating the Decimal command, changing the style of matplotlib, assigning the current
@@ -50,7 +50,6 @@ if os.name == 'nt':
 
 # create a working dataframe df_work, add quarter column
 df_work = df[['ID', 'Date', 'Cost', 'Category']].dropna()
-# df_work.rename(columns = {'Date' : 'Date'}) #why?
 df_work.loc[:, 'Month'] = df_work.loc[:, 'Date'].dt.month
 df_work.loc[:, 'Quarter'] = df_work.loc[:, 'Date'].dt.quarter
 df_work.loc[:, 'Year'] = df_work.loc[:, 'Date'].dt.year
@@ -60,11 +59,11 @@ df_work.loc[:, 'Aus_Qtr'] = df_work.loc[:, 'Quarter'].map(utils.quarter_aus)
 df_work.loc[:, 'Fin_Year'] = df_work.loc[:, 'Date'].apply(utils.fin_year)
 
 # begin the monthly reporting
-utils.mon_func(df_work, cwd, tableau20)
-utils.qtr_func(df_work, cwd, tableau20)
-utils.year_func(df_work, cwd)
-financial_independence.financial_independence()
-
-
+#utils.mon_func(df_work, cwd, tableau20)
+#utils.qtr_func(df_work, cwd, tableau20)
+#utils.year_func(df_work, cwd)
+ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, expensesVec, index_fi = fin_ind()
+utils.plot_fi(ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, expensesVec, index_fi)
 #   begin the Net Worth reporting
-net_worth.net_worth(cwd, tableau20)
+#net_worth.net_worth(cwd, tableau20)
+

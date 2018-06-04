@@ -75,6 +75,14 @@ def calc_tax(taxable_income):
     $87 001 - $180 000      $19 882 plus $0.37 for every $1 over $87 000
     $180 001 and over       $54 547 plus $0.45 for every $1 over $180 000
     """
+
+    """ Tax Brackets: 2018-2019
+    $0 - $18 200            NIL
+    $18 201 - $37 000       $0.19 for every $1 over $18 200
+    $37 001 - $90 000       $3 572 plus $0.325 for every $1 over $37 000
+    $90 001 - $180 000      $20 797 plus $0.37 for every $1 over $87 000
+    $180 001 and over       $54 547 plus $0.45 for every $1 over $180 000
+    """
     if taxable_income >= 180001:
         tax = D(round(54232 + D(0.45) * (taxable_income - 180000), 2))
     elif 87001 <= taxable_income <= 180000:
@@ -147,27 +155,28 @@ def plot_fi(ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, 
         report_dir = "C:\\Users\\ssamdj\\Dropbox\\Financials\\reports\\Financial Independence.pdf"
     else:
         report_dir = "~/Dropbox/Financials/reports/Financial Independence.pdf"
+    print("Saving file to:", report_dir)
+    with PdfPages(report_dir) as pdf:
+        fig, ax1 = plt.subplots()
+        networth = ax1.plot(ageVec, networthVec, 'b', label='Net Worth')
+        super = ax1.plot(ageVec, superVec, 'c', label='Super')
+        savings = ax1.plot(ageVec, savingsVec, 'g', label='Savings')
+        principal = ax1.plot(ageVec, principalVec, 'k--', label='Principal Required')
+        ax1.set_ylabel('Principal Required in $', color='k')
+        plt.legend(loc=2)
 
-        with PdfPages(report_dir) as pdf:
-            fig, ax1 = plt.subplots()
-            networth = ax1.plot(ageVec, networthVec, 'b', label='Net Worth')
-            super = ax1.plot(ageVec, superVec, 'c', label='Super')
-            savings = ax1.plot(ageVec, savingsVec, 'g', label='Savings')
-            principal = ax1.plot(ageVec, principalVec, 'k--', label='Principal Required')
-            ax1.set_ylabel('Principal Required in $', color='k')
-            plt.legend(loc=2)
-
-            # create a separate axis on the same graph, plot income v age, expenses vs age.
-            # Expenses is a horizontal line. Label this axis as Retirement income
-            ax2 = ax1.twinx()
-            retirement_income = ax2.plot(ageVec, incomeVec, 'm', label='Retirement Income')
-            annual_expenses = ax2.plot(ageVec, expensesVec, 'r--', label='Annual Expenses')
-            ax2.set_ylabel('Retirement Income in $', color='k')
-
-            # plots vertical line at the age of finanical independence which is parsed into the function.
-            # This is dependent of calculations prior to calling the function
-            plt.axvline(x=ageVec[index_fi], label="Financial Independence")
-            plt.legend(loc=4)
+        # create a separate axis on the same graph, plot income v age, expenses vs age.
+        # Expenses is a horizontal line. Label this axis as Retirement income
+        ax2 = ax1.twinx()
+        retirement_income = ax2.plot(ageVec, incomeVec, 'm', label='Retirement Income')
+        annual_expenses = ax2.plot(ageVec, expensesVec, 'r--', label='Annual Expenses')
+        ax2.set_ylabel('Retirement Income in $', color='k')
+        # plots vertical line at the age of financial independence which is parsed into the function.
+        # This is dependent of calculations prior to calling the function
+        plt.axvline(x=ageVec[index_fi], label="Financial Independence")
+        plt.legend(loc=4)
+        pdf.savefig(fig)
+        plt.close()
 
 
 def quarter_aus(quarter):

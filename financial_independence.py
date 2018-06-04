@@ -13,11 +13,11 @@ from matplotlib.backends.backend_pdf import PdfPages
 import utils
 
 
-def financial_independence(age=dt.date.today().year - 1990,
-                           gross_income=D(84000),
+def fin_ind(age=dt.date.today().year - 1990,
+                           gross_income=D(87000),
                            curr_investments=D(20000),
-                           super_bal=D(27000),
-                           expenses=D(44000),  # actual spend in FY 2016-2017 was $44 856.51
+                           super_bal=D(30000),
+                           expenses=D(48000),  # actual spend in FY 2016-2017 was $44 856.51
                            super_rate=D(11.5),
                            co_contrib=D(3),
                            growth_rate=D(0.08),
@@ -40,6 +40,8 @@ def financial_independence(age=dt.date.today().year - 1990,
     savings = net_income - expenses
     savings_ratio = D(round((net_income - expenses) / net_income, 2))
 
+    print("Annual savings amount is: $", savings)
+    print("The savings ratio is:", savings_ratio)
     # define the total length of the arrays
     L = 70
     indexVec = np.linspace(0, L - age, num=L - age + 1)
@@ -65,5 +67,5 @@ def financial_independence(age=dt.date.today().year - 1990,
     incomeVec[index_retire:end] = float(withdraw_rate) * networthVec[index_retire:end]
 
     index_fi = np.nonzero(incomeVec >= expenses)[0][0]
+    return ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, expensesVec, index_fi
 
-    utils.plot_fi(ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, expensesVec, index_fi)
