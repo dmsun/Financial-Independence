@@ -154,7 +154,7 @@ def plot_fi(ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, 
     if os.name == 'nt':
         report_dir = "C:\\Users\\ssamdj\\Dropbox\\Financials\\reports\\Financial Independence.pdf"
     else:
-        report_dir = "~/Dropbox/Financials/reports/Financial Independence.pdf"
+        report_dir = "/home/mj/Dropbox/Financials/reports/Financial Independence.pdf"
     print("Saving file to:", report_dir)
     with PdfPages(report_dir) as pdf:
         fig, ax1 = plt.subplots()

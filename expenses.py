@@ -21,7 +21,7 @@ if os.name == 'nt':
     cwd = "C:\\Users\\ssamdj\\Dropbox\\Financials"
     filepath = "{}\\data\\Expenses.csv".format(cwd)
 else:
-    cwd = "~/Dropbox/Financials"
+    cwd = "/home/mj/Dropbox/Financials"
     filepath = "{}/data/Expenses.csv".format(cwd)
 
 # These are the "Tableau 20" colors as RGB.
@@ -59,11 +59,11 @@ df_work.loc[:, 'Aus_Qtr'] = df_work.loc[:, 'Quarter'].map(utils.quarter_aus)
 df_work.loc[:, 'Fin_Year'] = df_work.loc[:, 'Date'].apply(utils.fin_year)
 
 # begin the monthly reporting
-#utils.mon_func(df_work, cwd, tableau20)
-#utils.qtr_func(df_work, cwd, tableau20)
-#utils.year_func(df_work, cwd)
+utils.mon_func(df_work, cwd, tableau20)
+utils.qtr_func(df_work, cwd, tableau20)
+utils.year_func(df_work, cwd)
 ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, expensesVec, index_fi = fin_ind()
 utils.plot_fi(ageVec, networthVec, superVec, savingsVec, principalVec, incomeVec, expensesVec, index_fi)
 #   begin the Net Worth reporting
-#net_worth.net_worth(cwd, tableau20)
+net_worth.net_worth(cwd, tableau20)
 
