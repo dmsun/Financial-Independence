@@ -12,8 +12,10 @@ def net_worth(cwd, tableau20):
     #TODO add linux if and add features to Utils, break up and pythonise.
     if os.name == 'nt':
         filepath = "{}\\data\\Networth.csv".format(cwd)
+        report_dir = "{}\\Reports\\Net Worth.pdf".format(cwd)
     else:
         filepath = "{}/data/Networth.csv".format(cwd)
+        report_dir = "{}/reports/Net Worth.pdf".format(cwd)
     columns = ['Number',
                'Month',
                'Net Worth',
@@ -71,7 +73,7 @@ def net_worth(cwd, tableau20):
                     df_networth.loc[:, colname] = (df_networth.loc[:, colname].str.replace(r'[^-+\d.]', '').astype(float))
         except:
             continue
-    with PdfPages("{}\\Reports\\Net Worth.pdf".format(cwd)) as pdf:
+    with PdfPages(report_dir) as pdf:
         fig, ax = plt.subplots()
         df_networth.plot(kind = 'line', subplots = True, ax = ax, x = 'Month', y = 'Net Worth', color = tableau20[1])
         df_networth.plot(kind = 'line', subplots = True, ax = ax, x = 'Month', y = 'Assets Subtotal', color = tableau20[3])

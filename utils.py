@@ -264,8 +264,12 @@ def qtr_func(df_work, cwd, colours=tableau20):
         group_pivot = pd.pivot_table(
             group.groupby(by=['Fin_Year', 'Aus_Qtr', 'Category']).agg({'Cost': np.sum}).reset_index(), values='Cost',
             index='Category', columns='Aus_Qtr', aggfunc='sum', fill_value=0)
+        if os.name == 'nt':
+            report_dir = "{0}\\reports\\{1} Aus_Qtrly Reports.pdf".format(cwd, name)
+        else:
+            report_dir = "{0}/reports/{1} Aus_Qtrly Reports.pdf".format(cwd, name)
 
-        with PdfPages("{0}\\Reports\\{1} Aus_Qtrly Reports.pdf".format(cwd, name)) as pdf:
+        with PdfPages(report_dir) as pdf:
             fig, ax = plt.subplots()
             group_pivot.plot.bar(subplots=False, ax=ax, legend=True, color=tableau20)
             ax.set_xlabel("Category")
@@ -301,7 +305,11 @@ def year_func(df_work, cwd, colours=tableau20):
     df_day = df_sub.groupby(by=['Fin_Year', 'Date']).agg({'Cost': np.sum}).reset_index()
     df_day.loc[:, 'Running Total'] = df_day.groupby(by=['Fin_Year'])['Cost'].cumsum()
     for name, group in df_day.groupby(by=['Fin_Year']):
-        with PdfPages("{0}\\reports\\{1} YTD Expense Report.pdf".format(cwd, name)) as pdf:
+        if os.name == 'nt':
+            report_dir = "{0}\\reports\\{1} YTD Expense Report.pdf".format(cwd, name)
+        else:
+            report_dir = "{0}/reports/{1} YTD Expense Report.pdf".format(cwd, name)
+        with PdfPages(report_dir) as pdf:
             # write to the pdf on a new page and close the plot. closing maybe redundant - need to perform some testing.
             pdf.savefig(year_day_report(name, group))
             plt.close()
