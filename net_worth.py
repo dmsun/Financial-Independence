@@ -9,7 +9,6 @@ import pandas as pd
 from matplotlib.backends.backend_pdf import PdfPages
 
 def net_worth(cwd, tableau20):
-    #TODO add linux if and add features to Utils, break up and pythonise.
     if os.name == 'nt':
         filepath = "{}\\data\\Networth.csv".format(cwd)
         report_dir = "{}\\Reports\\Net Worth.pdf".format(cwd)
@@ -103,3 +102,7 @@ def net_worth(cwd, tableau20):
         plt.tight_layout()
         pdf.savefig(fig)
         plt.close()
+
+if __name__ == "__main__":
+    filepath = 
+    net_worth(cwd, tableau20)
