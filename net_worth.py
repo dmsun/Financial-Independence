@@ -104,5 +104,10 @@ def net_worth(cwd, tableau20):
         plt.close()
 
 if __name__ == "__main__":
-    filepath = 
+    if os.name == 'nt':
+        filepath = "{}\\data\\Networth.csv".format(cwd)
+        report_dir = "{}\\Reports\\Net Worth.pdf".format(cwd)
+    else:
+        filepath = "{}/data/Networth.csv".format(cwd)
+        report_dir = "{}/reports/Net Worth.pdf".format(cwd)
     net_worth(cwd, tableau20)
